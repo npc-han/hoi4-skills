@@ -1,0 +1,16 @@
+﻿l_simp_chinese:
+ inner_circle_leader_title_tooltip:0 "[?inner_circle_entry:inner_circle_leader_type.GetName]"
+ inner_circle_leader_name_tooltip:0 "[?inner_circle_entry:inner_circle_leader_character.GetName]"
+ inner_circle_leader_name_title_tooltip:0 "[?inner_circle_entry:inner_circle_leader_type.GetName] [?inner_circle_entry:inner_circle_leader_character.GetName]\n[inner_circle_leader_modifier_key]"
+ inner_circle_leader_portrait_token_localized_key:0 "[?inner_circle_leader_entry:portrait_large.GetName]"
+ inner_circle_ascended_advisor_frame_gfx_appointed_localized_key:0 "GFX_ascended_advisors_frame"
+ inner_circle_ascended_advisor_frame_gfx_unappointed_localized_key:0 "GFX_ascended_advisors_unappointed_frame"
+ inner_circle_advisor_portrait_token_unappointed_localized_key:0 "GFX_blank_leader_portrait_m"
+
+ inner_circle_advisor_portrait_token_localized_key:0 "[?inner_circle_advisor_entry:portrait_medium.GetName]"
+ inner_circle_advisor_modifier_key_localization:0 "[?inner_circle_advisor_entry:trait_name.GetName]\n[inner_circle_advisor_modifier_key]"
+
+ inner_circle_advisor_small_portrait_token_localized_key:0 "[?inner_circle_advisor_entry:portrait_small.GetName]"
+ inner_circle_advisor_valid_portrait_token_localized_key:0 "[?inner_circle_advisor_entry:portrait_valid.GetName]"
+
+ NEW_INNER_CIRCLE_LEADER_DEFAULT_NAME:0 "元首"

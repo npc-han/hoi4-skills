@@ -1,0 +1,71 @@
+
+#### Inner Circle Assets ####
+
+spriteTypes = {	
+	### BG Assets ###
+	spriteType = {
+		name = "GFX_inner_circle_decor_bg_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/inner_circle_decor_bg_m.png"
+	}
+	spriteType = {
+		name = "GFX_inner_circle_decor_bg_m_solid"
+		texturefile = "gfx/interface/gui/easier_inner_circle/inner_circle_decor_bg_m_solid.png"
+	}
+	spriteType = {
+		name = "GFX_spotlight_overlay_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/spotlight_overlay_m.dds"
+	}
+
+	
+	### Leader Assets ###
+
+	spriteType = {
+		name = "GFX_circular_frame_leader_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/circular_frame_leader_m.dds"
+	}
+	spriteType = {
+		name = "GFX_leader_name_ribbon_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/leader_name_ribbon_m.dds"
+	}
+	spriteType = {
+		name = "GFX_trait_box_leader_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/trait_box_leader_m.dds"
+	}
+	spriteType = {
+		name = "GFX_leader_name_ribbon"
+		texturefile = "gfx/interface/gui/easier_inner_circle/leader_name_ribbon.dds"
+	}
+	spriteType = {
+		name = "GFX_trait_box_leader"
+		texturefile = "gfx/interface/gui/easier_inner_circle/trait_box_leader.dds"
+	}
+
+	
+	### Ascended Advisor Assets ###
+	spriteType = {
+		name = "GFX_ascended_advisors_frame_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/ascended_advisors_frame_m.dds"
+	}
+	spriteType = {
+		name = "GFX_ascended_advisor_name_box_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/ascended_advisor_name_box_m.dds"
+	}
+	spriteType = {
+		name = "GFX_ascended_advisor_trait_box_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/ascended_advisor_trait_box_m.dds"
+	}
+	spriteType = { #Invisible asset because scripted gui
+		name = "GFX_blank_leader_portrait_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/blank_leader_portrait_m.dds"
+	}
+	spriteType = {
+		name = "GFX_ascended_advisors_unappointed_frame_m"
+		texturefile = "gfx/interface/gui/easier_inner_circle/ascended_advisors_unappointed_frame_m.dds"
+	}
+	spriteType = {
+		name = "GFX_inner_circle_small_portrait_default_valid"
+		texturefile = "gfx/interface/gui/easier_inner_circle/inner_circle_default_valid.png"
+		noOfFrames = 3
+	}
+
+}

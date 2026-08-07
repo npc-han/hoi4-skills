@@ -1,0 +1,675 @@
+scripted_gui = {
+	general_inner_circle_gui = {
+		context_type = player_context
+		#parent_window_token = politics_tab
+		parent_window_name = inner_circle_anchor
+		window_name = "general_inner_circle_container_gridbox"
+		triggers = {
+			inner_circle_temp_array_calculator_visible = {
+				always = yes
+				clear_temp_array = temp_visible_inner_circle_lists
+				all_of = {
+					array = global.inner_circle_lists
+					value = inner_circle_entry
+					always = yes
+					if = {
+						limit = {
+							var:inner_circle_entry = {
+								always = yes
+								all_of = {
+									array = valid_token_lists
+									value = valid_token_entry
+									always = yes
+									CHECK_ADVISOR_VALID_TOKEN = yes
+								}
+								OR = {
+									has_character_flag = visible_while_not_available
+									meta_trigger = {
+										text = {
+											ROOT = {
+												has_idea = [t_token]_inner_circle
+											}
+										}
+										t_token = "[?inner_circle_entry:inner_circle_token.GetTokenKey]"
+									}
+								}
+							}
+						}
+						add_to_temp_array = {
+							temp_visible_inner_circle_lists = inner_circle_entry
+						}
+					}
+				}
+			}
+			inner_circle_advisor_temp_array_calculator_visible = {
+				always = yes
+				clear_temp_array = temp_ascended_advisor_lists
+				all_of = {
+					array = inner_circle_entry:inner_circle_advisors_lists
+					value = advisor_entry
+					always = yes
+					if = {
+						limit = {
+							var:advisor_entry = {
+								has_character_flag = inner_circle_advisor_activated
+							}
+						}
+						add_to_temp_array = {
+							temp_ascended_advisor_lists = advisor_entry
+						}
+					}
+				}
+				set_temp_variable = {
+					empty_slots_num = inner_circle_entry:inner_circle_showing_slot
+				}
+				subtract_from_temp_variable = {
+					empty_slots_num = temp_ascended_advisor_lists^num
+				}
+				#log = "[?global.general_number_array^num]"
+				all_of = {
+					array = global.general_number_array
+					value = ii
+					always = yes
+					check_variable = {
+						ii < empty_slots_num
+					}
+					add_to_temp_array = {
+						temp_ascended_advisor_lists = -1
+					}
+				}
+			}
+			inner_circle_all_advisor_temp_array_calculator_visible = {
+				always = yes
+				clear_temp_array = temp_all_advisor_lists
+				all_of = {
+					array = inner_circle_entry:inner_circle_advisors_lists
+					value = advisor_entry
+					always = yes
+					if = {
+						limit = {
+							always = yes
+							var:advisor_entry = {
+								always = yes
+								all_of = {
+									array = advisor_valid_token_lists
+									value = valid_token_entry
+									CHECK_ADVISOR_VISIBLE_TOKEN = yes
+								}
+							}
+						}
+						add_to_temp_array = {
+							temp_all_advisor_lists = advisor_entry
+						}
+					}
+				}
+				
+			}
+
+			ascended_advisor_frame_visible = {
+				always = yes
+				set_temp_variable = {
+					visible_slots_horizontal = 0
+				}
+				var:inner_circle_entry = {
+					add_to_temp_variable = {
+						visible_slots_horizontal = temp_ascended_advisor_lists^num
+					}
+					clamp_temp_variable = {
+						var = visible_slots_horizontal
+						min = 1
+						max = inner_circle_entry:inner_circle_max_slot_showing
+					}
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = 1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 520
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_1 = -260
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = j
+				}
+				add_to_temp_variable = {
+					t_advisor_gap_to_multiple = 1
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_1 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_1 = -60 #0
+				}
+			}
+			ascended_advisor_portrait_visible = {
+				always = yes
+				set_temp_variable = {
+					visible_slots_horizontal = 0
+				}
+				var:inner_circle_entry = {
+					add_to_temp_variable = {
+						visible_slots_horizontal = temp_ascended_advisor_lists^num
+					}
+					clamp_temp_variable = {
+						var = visible_slots_horizontal
+						min = 1
+						max = inner_circle_entry:inner_circle_max_slot_showing
+					}
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = 1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 520
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_2 = -260
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = j
+				}
+				add_to_temp_variable = {
+					t_advisor_gap_to_multiple = 1
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_2 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_2 = -60 #0
+				}
+			}
+			ascended_advisor_name_box_visible = {
+				always = yes
+				set_temp_variable = {
+					visible_slots_horizontal = 0
+				}
+				var:inner_circle_entry = {
+					add_to_temp_variable = {
+						visible_slots_horizontal = temp_ascended_advisor_lists^num
+					}
+					clamp_temp_variable = {
+						var = visible_slots_horizontal
+						min = 1
+						max = inner_circle_entry:inner_circle_max_slot_showing
+					}
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = 1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 520
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_3 = -260
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = j
+				}
+				add_to_temp_variable = {
+					t_advisor_gap_to_multiple = 1
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_3 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_3 = 0 #60
+				}
+			}
+			ascended_advisor_trait_box_visible = {
+				always = yes
+				set_temp_variable = {
+					visible_slots_horizontal = 0
+				}
+				var:inner_circle_entry = {
+					add_to_temp_variable = {
+						visible_slots_horizontal = temp_ascended_advisor_lists^num
+					}
+					clamp_temp_variable = {
+						var = visible_slots_horizontal
+						min = 1
+						max = inner_circle_entry:inner_circle_max_slot_showing
+					}
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = 1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 520
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_4 = -260
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = j
+				}
+				add_to_temp_variable = {
+					t_advisor_gap_to_multiple = 1
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_4 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_4 = 0 #60
+				}
+			}
+			ascended_advisor_name_visible = {
+				always = yes
+				NOT = {
+					check_variable = {
+						inner_circle_advisor_entry = -1
+					}
+				}
+				set_temp_variable = {
+					visible_slots_horizontal = 0
+				}
+				var:inner_circle_entry = {
+					add_to_temp_variable = {
+						visible_slots_horizontal = temp_ascended_advisor_lists^num
+					}
+					clamp_temp_variable = {
+						var = visible_slots_horizontal
+						min = 1
+						max = inner_circle_entry:inner_circle_max_slot_showing
+					}
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = 1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 520
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_5 = -260
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = j
+				}
+				add_to_temp_variable = {
+					t_advisor_gap_to_multiple = 1
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_5 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_5 = -135 #-75
+				}
+				
+			}
+			ascended_advisor_trait_visible = {
+				always = yes
+				NOT = {
+					check_variable = {
+						inner_circle_advisor_entry = -1
+					}
+				}
+				set_temp_variable = {
+					visible_slots_horizontal = 0
+				}
+				var:inner_circle_entry = {
+					add_to_temp_variable = {
+						visible_slots_horizontal = temp_ascended_advisor_lists^num
+					}
+					clamp_temp_variable = {
+						var = visible_slots_horizontal
+						min = 1
+						max = inner_circle_entry:inner_circle_max_slot_showing
+					}
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = 1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 520
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_6 = -260
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = j
+				}
+				add_to_temp_variable = {
+					t_advisor_gap_to_multiple = 1
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_6 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_6 = -135 #-75
+				}
+			}
+			advisor_small_portrait_visible = {
+				always = yes
+				set_temp_variable = {
+					visible_slots_horizontal = temp_all_advisor_lists^num
+				}
+				clamp_temp_variable = {
+					var = visible_slots_horizontal
+					min = 1
+					max = inner_circle_entry:inner_circle_max_slot_showing_small
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = -1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 320
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_7 = -160
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = k
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_7 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_7 = -25
+				}
+			}
+			advisor_small_portrait_valid_overlay_visible = {
+				always = yes
+				set_temp_variable = {
+					visible_slots_horizontal = temp_all_advisor_lists^num
+				}
+				clamp_temp_variable = {
+					var = visible_slots_horizontal
+					min = 1
+					max = inner_circle_entry:inner_circle_max_slot_showing_small
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = -1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 320
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_8 = -160
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = k
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_8 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_8 = -25
+				}
+				set_temp_variable = {
+					t_advisor_portrait_valid_frame = 3
+				}
+				if = {
+					limit = {
+						var:inner_circle_advisor_entry = {
+							has_character_flag = inner_circle_advisor_activated
+						}
+					}
+					set_temp_variable = {
+						t_advisor_portrait_valid_frame = 2
+					}
+				}
+				else_if = {
+					limit = {
+						var:inner_circle_advisor_entry = {
+							NOT = {
+								all_of = {
+									array = advisor_valid_token_lists
+									value = valid_token_entry
+									CHECK_ADVISOR_VALID_TOKEN = yes
+								}
+							}
+						}
+					}
+					set_temp_variable = {
+						t_advisor_portrait_valid_frame = 1
+					}
+				}
+			}
+			inner_circle_all_advisor_slider_controller_visible = {
+				always = yes
+				always = yes
+				set_temp_variable = {
+					visible_slots_num = 0
+				}
+				all_of = {
+					array = inner_circle_entry:inner_circle_advisors_lists
+					value = advisor_entry
+					always = yes
+					if = {
+						limit = {
+							always = yes
+							var:advisor_entry = {
+								always = yes
+								all_of = {
+									array = advisor_valid_token_lists
+									value = valid_token_entry
+									CHECK_ADVISOR_VISIBLE_TOKEN = yes
+								}
+							}
+						}
+						add_to_temp_variable = {
+							visible_slots_num = 1
+						}
+					}
+				}
+				set_temp_variable = {
+					visible_slots_horizontal = visible_slots_num
+				}
+				clamp_temp_variable = {
+					var = visible_slots_horizontal
+					min = 1
+					max = inner_circle_entry:inner_circle_max_slot_showing_small
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = -1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 320
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_9 = -160
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = visible_slots_num
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_9 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_9 = 175
+				}
+			}
+			inner_circle_ascended_advisor_slider_controller_visible = {
+				always = yes
+				set_temp_variable = {
+					ascended_advisor_num = 0
+				}
+				all_of = {
+					array = inner_circle_entry:inner_circle_advisors_lists
+					value = advisor_entry
+					always = yes
+					if = {
+						limit = {
+							var:advisor_entry = {
+								has_character_flag = inner_circle_advisor_activated
+							}
+						}
+						add_to_temp_variable = {
+							ascended_advisor_num = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							ascended_advisor_num < inner_circle_entry:inner_circle_showing_slot
+						}
+					}
+					set_temp_variable = {
+						ascended_advisor_num = inner_circle_entry:inner_circle_showing_slot
+					}
+				}
+				set_temp_variable = {
+					visible_slots_horizontal = 0
+				}
+				var:inner_circle_entry = {
+					add_to_temp_variable = {
+						visible_slots_horizontal = ascended_advisor_num
+					}
+					clamp_temp_variable = {
+						var = visible_slots_horizontal
+						min = 1
+						max = inner_circle_entry:inner_circle_max_slot_showing
+					}
+				}
+				add_to_temp_variable = {
+					visible_slots_horizontal = 1
+				}
+				set_temp_variable = {
+					t_advisor_portrait_gap = 520
+				}
+				divide_temp_variable = {
+					t_advisor_portrait_gap = visible_slots_horizontal
+				}
+				set_temp_variable = {
+					t_advisor_portrait_position_x_10 = -260
+				}
+				set_temp_variable = {
+					t_advisor_gap_to_multiple = ascended_advisor_num
+				}
+				add_to_temp_variable = {
+					t_advisor_gap_to_multiple = 1
+				}
+				multiply_temp_variable = {
+					t_advisor_portrait_gap = t_advisor_gap_to_multiple
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_10 = t_advisor_portrait_gap
+				}
+				add_to_temp_variable = {
+					t_advisor_portrait_position_x_10 = 165 #-75
+				}
+			}
+		}
+		dynamic_lists = {
+			
+			general_inner_circle_gridbox = {
+				array = temp_visible_inner_circle_lists
+				value = inner_circle_entry
+				index = i
+				change_scope = no
+				entry_container = "general_inner_circle_container"
+			}
+			inner_circle_ascended_advisors_girdbox = {
+				array = temp_ascended_advisor_lists
+				value = inner_circle_advisor_entry
+				index = j
+				change_scope = no
+				entry_container = "ascended_advisor_container"
+			}
+			inner_circle_all_advisors_girdbox = {
+				array = temp_all_advisor_lists
+				value = inner_circle_advisor_entry
+				index = k
+				change_scope = no
+				entry_container = "all_advisors_container_entry"
+			}
+		}
+		properties = {
+			leader_portrait = {
+				image = "[inner_circle_leader_portrait_token_key]"
+			}
+			ascended_advisor_frame = {
+				image = "[inner_circle_ascended_advisor_frame_gfx]_m"
+				x = t_advisor_portrait_position_x_1
+			}
+			ascended_advisor_portrait = {
+				image = "[inner_circle_advisor_portrait_token_key]"
+				#image = "GFX_ascended_advisors_unappointed_frame_m"
+				x = t_advisor_portrait_position_x_2
+			}
+			ascended_advisor_name_box = {
+				x = t_advisor_portrait_position_x_3
+			}
+			ascended_advisor_trait_box = {
+				x = t_advisor_portrait_position_x_4
+			}
+			ascended_advisor_name = {
+				x = t_advisor_portrait_position_x_5
+			}
+			ascended_advisor_trait = {
+				x = t_advisor_portrait_position_x_6
+			}
+			advisor_small_portrait = {
+				image = "[inner_circle_advisor_small_portrait_token_key]"
+				x = t_advisor_portrait_position_x_7
+			}
+			advisor_small_portrait_valid_overlay = {
+				image = "[inner_circle_advisor_valid_portrait_token_key]"
+				frame = t_advisor_portrait_valid_frame
+				x = t_advisor_portrait_position_x_8
+			}
+			inner_circle_all_advisor_slider_controller = {
+				x = t_advisor_portrait_position_x_9
+			}
+			inner_circle_ascended_advisor_slider_controller = {
+				x = t_advisor_portrait_position_x_10
+			}
+		}
+	}
+}
+

@@ -1,0 +1,74 @@
+technologies = {
+	inner_circle_advisor_modifier_localization_effect ={
+		allow = {
+			always = no
+		}
+		on_research_complete_limit = {
+			always = yes
+		}
+		on_research_complete = {
+			if = {
+				limit = {
+					var:inner_circle_advisor_entry = {
+						has_character_flag = is_generated_by_generate_character
+					}
+				}
+				meta_effect = {
+					text = {
+						custom_effect_tooltip = {
+							localization_key = advisor_desc|inner_circle_character_[t_ideatoken_id]
+						}
+					}
+					t_tokenbase = "[?inner_circle_advisor_entry:character_token_base.GetTokenKey]"
+					t_ideatoken_id = "[?inner_circle_advisor_entry:inner_circle_character_advisor_index]"
+				}
+			}
+			else = {
+				meta_effect = {
+					text = {
+						custom_effect_tooltip = {
+							localization_key = advisor_desc|inner_circle_character_[t_ideatoken_id]
+						}
+					}
+					t_ideatoken_id = "[?inner_circle_advisor_entry:inner_circle_character_advisor_index]"
+				}
+			}
+		}
+	}
+	inner_circle_leader_modifier_localization_effect ={
+		allow = {
+			always = no
+		}
+		on_research_complete_limit = {
+			always = yes
+		}
+		on_research_complete = {
+			if = {
+				limit = {
+					var:inner_circle_leader_entry = {
+						has_character_flag = is_generated_by_generate_character
+					}
+				}
+				meta_effect = {
+					text = {
+						custom_effect_tooltip = {
+							localization_key = advisor_desc|inner_circle_character_[t_ideatoken_id]
+						}
+					}
+					t_tokenbase = "[?inner_circle_leader_entry:character_token_base.GetTokenKey]"
+					t_ideatoken_id = "[?inner_circle_leader_entry:inner_circle_character_leader_index]"
+				}
+			}
+			else = {
+				meta_effect = {
+					text = {
+						custom_effect_tooltip = {
+							localization_key = advisor_desc|inner_circle_character_[t_ideatoken_id]
+						}
+					}
+					t_ideatoken_id = "[?inner_circle_leader_entry:inner_circle_character_leader_index]"
+				}
+			}
+		}
+	}
+}

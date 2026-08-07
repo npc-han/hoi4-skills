@@ -1,0 +1,625 @@
+inner_circle_init = {
+	if = {
+		limit = {
+			NOT = {
+				has_global_flag = inner_circle_already_init
+			}
+		}
+		set_global_flag = inner_circle_already_init
+		set_variable = {
+			global.inner_circle_leader_index_maximum = -1
+		}
+		set_variable = {
+			global.inner_circle_index_maximum = -1
+		}
+		set_variable = {
+			global.inner_circle_valid_token_index_maximum = -1
+		}
+		set_variable = {
+			global.inner_circle_character_index_maximum = -1
+		}
+		set_variable = {
+			global.inner_circle_portrait_index_maximum = -1
+		}
+		set_variable = {
+			global.inner_circle_trait_index_maximum = -1
+		}
+		set_variable = {
+			global.inner_circle_scripted_character_index_maximum = -1
+		}
+		general_inner_circle_leader_type_create_with_no_init = yes
+		var:new_inner_circle_leader = {
+			set_character_name = NEW_INNER_CIRCLE_LEADER_DEFAULT_NAME
+		}
+		set_variable = {
+			global.inner_circle_default_leader = new_inner_circle_leader
+		}
+	}
+}
+add_inner_circle_leader_role = {
+	inner_circle_init = yes
+	add_to_variable = {
+		global.inner_circle_character_index_maximum = 1
+	}
+	set_variable = {
+		global.recent_inner_circle_leader = THIS
+	}
+	meta_effect = {
+		text = {
+			add_advisor_role = {
+				advisor = {
+					slot = inner_circle_leader
+					traits = {
+					}
+					idea_token = inner_circle_character_[t_index]
+				}
+			}
+			set_variable = {
+				inner_circle_character_leader_index = [t_index]
+			}
+		}
+		t_index = "[?global.inner_circle_character_index_maximum]"
+	}
+	add_to_variable = {
+		global.inner_circle_portrait_index_maximum = 1
+	}
+	owner = {
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = new_portrait_[t_index]
+					name = "my_new_portrait"
+				}
+				set_variable = {
+					global.new_portrait = new_portrait_[t_index]
+				}
+			}
+			t_index = "[?global.inner_circle_portrait_index_maximum]"
+		}
+	}
+	set_variable = {
+		portrait_large = global.new_portrait
+	}
+	log = "[?THIS.portrait_large]"
+}
+add_inner_circle_advisor_role = {
+	inner_circle_init = yes
+	add_to_variable = {
+		global.inner_circle_character_index_maximum = 1
+	}
+	add_to_variable = {
+		global.inner_circle_scripted_character_index_maximum = 1
+	}
+	set_variable = {
+		global.recent_inner_circle_advisor = THIS
+	}
+	meta_effect = {
+		text = {
+			set_variable = {
+				var:global.inner_circle_character_with_index_[t_index] = THIS
+			}
+			add_advisor_role = {
+				advisor = {
+					slot = inner_circle_advisor
+					traits = {
+					}
+					idea_token = inner_circle_character_[t_index]
+				}
+			}
+			owner = {
+				generate_character = {
+					token_base = inner_circle_scripted_character_[t_index2]
+					name = inner_circle_scripted_character_[t_index2]
+					advisor = {
+						slot = inner_circle_scripted_character
+						traits = {
+						}
+						idea_token = inner_circle_scripted_character
+						available = {
+							always = yes
+							var:global.inner_circle_character_with_index_[t_index] = {
+								all_of = {
+									array = advisor_valid_token_lists
+									value = valid_token_entry
+									CHECK_ADVISOR_VALID_TOKEN = yes
+								}
+							}
+						}
+						on_remove = {
+							var:global.inner_circle_character_with_index_[t_index] = {
+								deactivate_inner_circle_advisor = yes
+							}
+						}
+					}
+				}
+			}
+			set_variable = {
+				inner_circle_character_advisor_index = [t_index]
+			}
+		}
+		t_index = "[?global.inner_circle_character_index_maximum]"
+		t_index2 = "[?global.inner_circle_scripted_character_index_maximum]"
+	}
+	set_variable = {
+		scripted_character_remover = global.inner_circle_scripted_character_index_maximum
+	}
+	add_to_variable = {
+		global.inner_circle_portrait_index_maximum = 1
+	}
+	owner = {
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = new_portrait_[t_index]
+					name = "my_new_portrait"
+				}
+				set_variable = {
+					global.new_portrait = new_portrait_[t_index]
+				}
+			}
+			t_index = "[?global.inner_circle_portrait_index_maximum]"
+		}
+	}
+	set_variable = {
+		portrait_medium = global.new_portrait
+	}
+	add_to_variable = {
+		global.inner_circle_portrait_index_maximum = 1
+	}
+	owner = {
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = new_portrait_[t_index]
+					name = "my_new_portrait"
+				}
+				set_variable = {
+					global.new_portrait = new_portrait_[t_index]
+				}
+			}
+			t_index = "[?global.inner_circle_portrait_index_maximum]"
+		}
+	}
+	set_variable = {
+		portrait_small = global.new_portrait
+	}
+	add_to_variable = {
+		global.inner_circle_portrait_index_maximum = 1
+	}
+	owner = {
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = new_portrait_[t_index]
+					name = "GFX_inner_circle_small_portrait_default_valid"
+				}
+				set_variable = {
+					global.new_portrait = new_portrait_[t_index]
+				}
+			}
+			t_index = "[?global.inner_circle_portrait_index_maximum]"
+		}
+	}
+	set_variable = {
+		portrait_valid = global.new_portrait
+	}
+	add_to_variable = {
+		global.inner_circle_trait_index_maximum = 1
+	}
+	owner = {
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = new_trait_[t_index]
+					name = "my_new_trait"
+				}
+				set_variable = {
+					global.new_trait = new_trait_[t_index]
+				}
+			}
+			t_index = "[?global.inner_circle_trait_index_maximum]"
+		}
+	}
+	set_variable = {
+		trait_name = global.new_trait
+	}
+}
+general_inner_circle_leader_type_create_with_no_init = {
+	hidden_effect = {
+		add_to_variable = {
+			global.inner_circle_leader_index_maximum = 1
+		}
+		set_variable = {
+			new_inner_circle_leader = -1
+		}
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = general_inner_circle_leader_[t_index]
+					name = THE_NEW_INNER_CIRCLE_LEADER_NAME
+				}
+				set_variable = {
+					new_inner_circle_leader = general_inner_circle_leader_[t_index]
+				}
+				var:new_inner_circle_leader = {
+					set_variable = {
+						inner_circle_leader_token = token:general_inner_circle_leader_[t_index]
+					}
+				}
+				set_variable = {
+					global.new_inner_circle_leader = general_inner_circle_leader_[t_index]
+				}
+			}
+			t_index = "[?global.inner_circle_leader_index_maximum]"
+		}
+	}
+}
+general_inner_circle_leader_type_create = {
+	inner_circle_init = yes
+	hidden_effect = {
+		add_to_variable = {
+			global.inner_circle_leader_index_maximum = 1
+		}
+		set_variable = {
+			new_inner_circle_leader = -1
+		}
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = general_inner_circle_leader_[t_index]
+					name = THE_NEW_INNER_CIRCLE_LEADER_NAME
+				}
+				set_variable = {
+					new_inner_circle_leader = general_inner_circle_leader_[t_index]
+				}
+				var:new_inner_circle_leader = {
+					set_variable = {
+						inner_circle_leader_token = token:general_inner_circle_leader_[t_index]
+					}
+				}
+				set_variable = {
+					global.new_inner_circle_leader = general_inner_circle_leader_[t_index]
+				}
+			}
+			t_index = "[?global.inner_circle_leader_index_maximum]"
+		}
+	}
+}
+general_inner_circle_create = {
+	inner_circle_init = yes
+	hidden_effect = {
+		add_to_variable = {
+			global.inner_circle_index_maximum = 1
+		}
+		set_variable = {
+			new_inner_circle = -1
+		}
+		meta_effect = {
+			text = {
+				generate_character = {
+					token_base = general_inner_circle_[t_index]
+					name = THE_NEW_INNER_CIRCLE_NAME
+					advisor = {
+						slot = inner_circle_circle
+						idea_token = inner_circle
+						traits = {}
+						available = {
+							always = yes
+							general_inner_circle_[t_index] = {
+								all_of = {
+									array = valid_token_lists
+									value = valid_token_entry
+									CHECK_ADVISOR_VALID_TOKEN = yes
+								}
+							}
+						}
+						on_remove = {
+							for_each_loop = {
+								array = inner_circle_advisors_lists
+								value = advisor_entry
+								owner = {
+									var:advisor_entry = {
+										deactivate_inner_circle_advisor = yes
+									}
+								}
+							}
+							set_temp_variable = {
+								t_leader_character = inner_circle_leader_character
+							}
+							owner = {
+								var:t_leader_character = {
+									deactivate_inner_circle_leader = yes
+								}
+							}
+						}
+					}
+				}
+				set_variable = {
+					new_inner_circle = general_inner_circle_[t_index]
+				}
+				var:new_inner_circle = {
+					set_variable = {
+						inner_circle_token = token:general_inner_circle_[t_index]
+					}
+					set_variable = {
+						inner_circle_leader_type = global.inner_circle_default_leader
+					}
+					set_variable = {
+						inner_circle_showing_slot = 3
+					}
+					set_variable = {
+						inner_circle_max_slot_showing = 5
+					}
+					set_variable = {
+						inner_circle_max_slot_showing_small = 9
+					}
+				}
+				add_to_array = {
+					global.inner_circle_lists = new_inner_circle 
+				}
+			}
+			t_index = "[?global.inner_circle_index_maximum]"
+		}
+	}
+}
+add_new_inner_circle_valid_token = {
+	inner_circle_init = yes
+	add_to_variable = {
+		global.inner_circle_valid_token_index_maximum = 1
+	}
+	set_variable = {
+		new_inner_circle_valid_token = -1
+	}
+	meta_effect = {
+		text = {
+			generate_character = {
+				token_base = general_inner_circle_valid_token_[t_index]
+				name = THE_NEW_INNER_CIRCLE_NAME
+			}
+			set_variable = {
+				new_inner_circle_valid_token = general_inner_circle_valid_token_[t_index]
+			}
+			var:new_inner_circle_valid_token = {
+				set_variable = {
+					inner_circle_valid_token_token = token:general_inner_circle_valid_token_[t_index]
+				}
+			}
+			set_variable = {
+				global.new_inner_circle_valid_token = general_inner_circle_valid_token_[t_index]
+			}
+		}
+		t_index = "[?global.inner_circle_valid_token_index_maximum]"
+	}
+}
+bound_new_valid_token_to_inner_circle = {
+	add_to_array = {
+		valid_token_lists = global.new_inner_circle_valid_token
+	}
+}
+bound_valid_token_to_inner_circle = {
+	add_to_array = {
+		valid_token_lists = inner_circle_valid_token_to_add
+	}
+}
+bound_new_valid_token_to_inner_circle_advisor = {
+	add_to_array = {
+		advisor_valid_token_lists = global.new_inner_circle_valid_token
+	}
+}
+bound_valid_token_to_inner_circle_advisor = {
+	add_to_array = {
+		advisor_valid_token_lists = inner_circle_valid_token_to_add
+	}
+}
+add_advisor_to_inner_circle = {
+	add_to_array = {
+		inner_circle_advisors_lists = inner_circle_advisor_to_add
+	}
+}
+activate_inner_circle_advisor = {
+	set_character_flag = inner_circle_advisor_activated
+	meta_effect = {
+		text = {
+			owner = {
+				activate_advisor = inner_circle_scripted_character_[t_scripted_token]_inner_circle_scripted_character
+			}
+		}
+		t_scripted_token = "[?THIS.scripted_character_remover]"
+	}
+	if = {
+		limit = {
+			has_character_flag = is_generated_by_generate_character
+		}
+		meta_effect = {
+			text = {
+				owner = {
+					activate_advisor = [t_tokenbase]_inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_tokenbase = "[?THIS.character_token_base.GetTokenKey]"
+			t_ideatoken_id = "[?THIS.inner_circle_character_advisor_index]" 
+		}
+	}
+	else = {
+		meta_effect = {
+			text = {
+				owner = {
+					activate_advisor = inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_ideatoken_id = "[?THIS.inner_circle_character_advisor_index]" 
+		}
+	}
+}
+deactivate_inner_circle_advisor = {
+	clr_character_flag = inner_circle_advisor_activated
+	if = {
+		limit = {
+			has_character_flag = is_generated_by_generate_character
+		}
+		meta_effect = {
+			text = {
+				owner = {
+					deactivate_advisor = [t_tokenbase]_inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_tokenbase = "[?THIS.character_token_base.GetTokenKey]"
+			t_ideatoken_id = "[?THIS.inner_circle_character_advisor_index]" 
+		}
+	}
+	else = {
+		meta_effect = {
+			text = {
+				owner = {
+					deactivate_advisor = inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_ideatoken_id = "[?THIS.inner_circle_character_advisor_index]" 
+		}
+	}
+}
+activate_inner_circle_leader = {
+	if = {
+		limit = {
+			has_character_flag = is_generated_by_generate_character
+		}
+		meta_effect = {
+			text = {
+				owner = {
+					activate_advisor = [t_tokenbase]_inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_tokenbase = "[?THIS.character_token_base.GetTokenKey]"
+			t_ideatoken_id = "[?THIS.inner_circle_character_leader_index]" 
+		}
+	}
+	else = {
+		meta_effect = {
+			text = {
+				owner = {
+					activate_advisor = inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_ideatoken_id = "[?THIS.inner_circle_character_leader_index]" 
+		}
+	}
+	set_character_flag = inner_circle_leader_activated
+}
+deactivate_inner_circle_leader = {
+	if = {
+		limit = {
+			has_character_flag = is_generated_by_generate_character
+		}
+		meta_effect = {
+			text = {
+				owner = {
+					deactivate_advisor = [t_tokenbase]_inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_tokenbase = "[?THIS.character_token_base.GetTokenKey]"
+			t_ideatoken_id = "[?THIS.inner_circle_character_leader_index]" 
+		}
+	}
+	else = {
+		meta_effect = {
+			text = {
+				owner = {
+					deactivate_advisor = inner_circle_character_[t_ideatoken_id]
+				}
+			}
+			t_ideatoken_id = "[?THIS.inner_circle_character_leader_index]" 
+		}
+	}
+	clr_character_flag = inner_circle_leader_activated
+}
+set_inner_circle_leader = {
+	owner = {
+		var:inner_circle_leader_character = {
+			deactivate_inner_circle_leader = yes
+		}
+	}
+	set_variable = {
+		inner_circle_leader_character = inner_circle_leader_to_add
+	}
+	remove_from_array = {
+		inner_circle_advisors_lists = inner_circle_leader_to_add
+	}
+	owner = {
+		var:inner_circle_leader_character = {
+			activate_inner_circle_leader = yes
+		}
+	}
+}
+set_recent_inner_circle_leader_to_inner_circle = {
+	owner = {
+		var:inner_circle_leader_character = {
+			deactivate_inner_circle_leader = yes
+		}
+	}
+	set_variable = {
+		inner_circle_leader_character = global.recent_inner_circle_leader
+	}
+	remove_from_array = {
+		inner_circle_advisors_lists = global.recent_inner_circle_leader
+	}
+	owner = {
+		var:inner_circle_leader_character = {
+			activate_inner_circle_leader = yes
+		}
+	}
+}
+add_recent_advisor_to_inner_circle = {
+	add_to_array = {
+		inner_circle_advisors_lists = global.recent_inner_circle_advisor
+	}
+}
+set_inner_circle_leader_type = {
+	set_variable = {
+		inner_circle_leader_type = inner_circle_leader_type_to_set
+	}
+}
+set_new_inner_circle_leader_type = {
+	set_variable = {
+		inner_circle_leader_type = global.new_inner_circle_leader
+	}
+}
+set_nationality_to_prev = {
+	set_nationality = PREV
+}
+activate_inner_circle_to_PREV = {
+	set_nationality = PREV
+	meta_effect = {
+		text = {
+			owner = {
+				activate_advisor = [t_inner_circle_token_base]_inner_circle
+			}
+		}
+		t_inner_circle_token_base = "[?THIS.inner_circle_token.GetTokenKey]"
+	}
+}
+activate_inner_circle = {
+	meta_effect = {
+		text = {
+			owner = {
+				activate_advisor = [t_inner_circle_token_base]_inner_circle
+			}
+		}
+		t_inner_circle_token_base = "[?THIS.inner_circle_token.GetTokenKey]"
+	}
+}
+deactivate_inner_circle = {
+	meta_effect = {
+		text = {
+			owner = {
+				deactivate_advisor = [t_inner_circle_token_base]_inner_circle
+			}
+		}
+		t_inner_circle_token_base = "[?THIS.inner_circle_token.GetTokenKey]"
+	}
+}
+visible_while_not_available = {
+	set_character_flag = visible_while_not_available
+}
+not_visible_while_not_available = {
+	clr_character_flag = visible_while_not_available
+}

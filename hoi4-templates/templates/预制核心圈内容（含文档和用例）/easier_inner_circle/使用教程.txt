@@ -1,0 +1,522 @@
+本文件是一个代码预制菜，需要使用本mod的代码需要将本mod的文件通过如下方式移动到你的mod文件中。
+第一步：
+	如果在你的mod中（或者你的mod是子mod的情况下，在你的母mod中）没有interface/countrypoliticsview.gui文件
+	则将本mod的整个该文件移动到你的mod文件夹下。
+	如果在你的mod中有这个文件，那么请打开你mod的该文件，并在文件内搜索idea_categories_grid，在包含有该gridbox的containerWindowType(name为"idea")中（即该containerWindowType的大括号里）新增如下项（可以在本mod的该文件中复制）：
+	
+	containerWindowType = {
+		name = "inner_circle_anchor"
+		position = { x = 7 y = 350 }
+		size = {
+			width = 100%
+			height = 200%
+		}
+		orientation = UPPER_LEFT
+	}
+
+	然后打开本mod的该文件，将整个从### inner circle start ### 开始到 ### inner circle end ### 中的所有内容从复制到文件末尾。
+	如果需要显示在包括国策在内的其他地方，请见下方：
+	在你的interface下新定义一个.gui文件，将整个从### inner circle start ### 开始到 ### inner circle end ### 中的所有内容复制进去
+	如果需要在多处显示文件，将每个general_inner_circle_container_gridbox改为不同的名字，同时把scripted_guis下面的文件复制多份并且也相应地更改名字。
+	如果需要让核心圈图片挂载在某个子窗口中，类似上方将inner_circle_anchor挂载在其他文件中你想要的窗口下面，随后将核心圈本体部分复制到那个文件末尾即可。
+	注意：由于使用了纵二格的gridbox来存储核心圈，如果你想要放在国策一类的地方可能导致出现显示bug（中间被切断），可以尝试在核心圈本体部分的第一个窗口中修改clipping = no 同时去掉第一个窗口的横向滑条即可。
+
+第二步：
+	将除了该文件以外的所有文件移动到本mod下。
+
+本mod暂时只能让核心圈显示在顾问槽下方。我们将会在今后的更新中实现让核心圈显示在国策栏中。
+
+
+本mod新增的效果如下：
+
+为当前国家创建核心圈：
+	general_inner_circle_create = yes
+	被创建出来的核心圈将会储存在new_inner_circle变量中，建议定义一个新的变量来保存（set_variable = {你想要的变量名字 = new_inner_circle}
+	一个国家可以拥有多个核心圈。
+
+修改核心圈的名字：
+	var:你用于储存核心圈的变量 = {
+		set_character_name = "你想要的核心圈名字"
+	}
+	前面的var不能省略，下同。
+
+	
+修改核心圈在未满时显示的启用的顾问数量（如果启用的顾问数量低于这个值，会使用原版的空背景占位。默认为3）
+	set_variable = {
+		inner_circle_showing_slot = 3
+	}
+
+修改核心圈一行中在不出现滑块的情况下显示的“启用的”顾问数量（如果低于这个数量，会自动调整间距）
+	set_variable = {
+		inner_circle_max_slot_showing = 5
+	}
+	默认一行最多5
+	
+修改核心圈一行中在不出现滑块的情况下显示的总顾问数量（即下方的顾问小图，如果低于这个数量，会自动调整间距，默认为9）
+	set_variable = {
+		inner_circle_max_slot_showing_small = 9
+	}
+
+
+为拥有该核心圈的国家启用核心圈：
+	var:你用于储存核心圈的变量 = {
+		activate_inner_circle = yes
+	}
+	拥有该核心圈的国家即使用创建该核心圈的效果的国家。
+
+为拥有该核心圈的国家停用核心圈：
+	var:你用于储存核心圈的变量 = {
+		deactivate_inner_circle = yes
+	}
+	会自动停用核心圈领袖以及顾问的特质修正。
+
+为国家启用核心圈：
+	国家 = {
+		var:你用于储存核心圈的变量 = {
+			activate_inner_circle_to_PREV = yes
+		}
+	}
+	不会自动将顾问一并转移（将会在之后的更新中调整）
+
+	
+
+将核心圈转移至国家：
+	国家 = {
+		var:你用于储存核心圈的变量 = {
+			set_nationality_to_prev = yes
+		}
+	}
+	不会自动将顾问一并转移（将会在之后的更新中调整）
+
+为角色增加核心圈领袖的身份：
+	角色 = {
+		add_inner_circle_leader_role = yes
+	}
+	修改角色的核心圈肖像：
+		角色 = {
+			var:portrait_large = {
+				set_character_name = "GFX_XXXX"
+			}
+		}
+		GFX_XXXX即你要设置的肖像。
+		肖像规格为 124 x 124 的圆形。
+
+
+让角色成为当前核心圈领袖
+	var:你用于储存核心圈的变量 = {
+		set_recent_inner_circle_leader_to_inner_circle = yes
+	}
+	需要先将临时变量inner_circle_leader_to_add设置为你想要设置的领导人。
+
+	让刚刚被增加核心圈领袖身份的角色成为当前核心圈领袖：
+		var:你用于储存核心圈的变量 = {
+			set_recent_inner_circle_leader_to_inner_circle = yes
+		}
+		刚刚被增加核心圈领袖身份的角色即上一次使用add_inner_circle_leader_role效果的角色。
+		一般紧挨着add_inner_circle_leader_role使用以使该角色成为核心圈领袖。
+
+为当前角色增加作为核心圈领袖特质：
+	角色 = {
+		add_trait = {
+			slot = inner_circle_leader
+			trait = 特质
+		}
+	}	
+	可以增加多个特质，效果叠加。
+
+为角色增加核心圈顾问的身份：
+	角色 = {
+		add_inner_circle_advisor_role = yes
+	}
+	修改角色的核心圈成员肖像（即当被任命为核心圈成员时）：
+		角色 = {
+			var:portrait_medium = {
+				set_character_name = "GFX_XXXX"
+			}
+		}
+		GFX_XXXX即你要设置的肖像。
+		肖像规格与国家领导人肖像规格相同，为156 x 210
+
+	修改角色的核心圈可用成员肖像（当没有任命为核心圈成员时）：
+		角色 = {
+			var:portrait_small = {
+				set_character_name = "GFX_XXXX"
+			}
+		}
+		GFX_XXXX即你要设置的肖像。
+		肖像规格为宽58，纵向随意，但是应尽量在70以内
+
+	修改角色的核心圈判定附加肖像：
+		角色 = {
+			var:portrait_valid = {
+				set_character_name = "GFX_XXXX"
+			}
+		}
+		GFX_XXXX即你要设置的肖像，肖像规格与上相同，但是是一张包含三帧的图片。
+		核心圈判断附加肖像即根据角色的情况自动更改的肖像。
+		图片的三帧中，第一帧为角色不可用（见下方判定条件章节）时显示，第二帧为角色被任命时显示，第三帧为角色可用但是没有被任命时显示。
+		在本mod中已经附带了默认的图片，因此可以不用设置。
+
+	修改角色称号：
+		角色 = {
+			var:trait_name = {
+				set_character_name = "称号名称"
+			}
+		}
+		角色的称号，仅用于显示本地化。
+
+将角色加入核心圈：
+	var:你用于储存核心圈的变量 = {
+		add_advisor_to_inner_circle = yes
+	}
+	需要先将临时变量inner_circle_advisor_to_add设置为你想要加入的角色。
+
+	让刚刚被增加核心圈顾问身份的角色加入当前核心圈：
+		var:你用于储存核心圈的变量 = {
+			add_recent_advisor_to_inner_circle = yes
+		}
+		刚刚被增加核心圈顾问身份的角色即上一次使用add_inner_circle_advisor_role效果的角色。
+		一般紧挨着add_inner_circle_advisor_role使用以使该角色被加入核心圈。
+
+启用当前角色：
+	将当前角色任命为核心圈成员，使其trait生效。
+	角色 = {
+		activate_inner_circle_advisor = yes
+	}
+	目前由于代码限制，如果一个角色被启用，所有拥有这个角色的核心圈都将显示该角色，因此这种情况建议通过为角色增加visible来控制角色在不同核心圈中的可见性（见下方判定条件章节）。
+	
+	
+停用当前角色：
+	角色 = {
+		deactivate_inner_circle_advisor
+	}
+
+为当前角色增加作为核心圈顾问特质：
+	角色 = {
+		add_trait = {
+			slot = inner_circle_advisor
+			trait = 特质
+		}
+	}	#inner_circle_advisor
+	特质在角色启用时生效
+	可以增加多个特质，效果叠加。
+
+创建一个新的领导人称号（即“元首”，目前仅有本地化功能，在之后会考虑增加其他功能）：
+	general_inner_circle_leader_type_create = yes
+	被创建出来的核心圈将会储存在new_inner_circle变量中，建议定义一个新的变量来保存。
+	修改领导人称号的名字：
+		var:你用于储存领导人称号的变量 = {
+			set_character_name = "你想要的领导人称号名字"
+		}
+
+将领导人称号给予核心圈：
+	var:你用于储存核心圈的变量 = {
+		set_inner_circle_leader_type = yes
+	}
+	需要先将临时变量inner_circle_leader_type_to_set设置为你想要设置的领导人称号。
+	新创建的领导人称号即上一次使用general_inner_circle_leader_type_create创建的领导人称号。
+	一般紧挨着add_inner_circle_leader_role使用以使该角色成为核心圈领袖。
+
+	将新创建的领导人称号给予核心圈：
+		var:你用于储存核心圈的变量 = {
+			set_new_inner_circle_leader_type = yes
+		}
+		新创建的领导人称号即上一次使用general_inner_circle_leader_type_create创建的领导人称号。
+		一般紧挨着add_inner_circle_leader_role使用以使该角色成为核心圈领袖。
+
+创建新的判定条件：
+	add_new_inner_circle_valid_token = yes
+	判定条件指的是控制核心圈/核心圈顾问可用或可见的条件，见下方具体讲解
+	新创建的核心圈判定条件储存在变量new_inner_circle_valid_token中。
+	通过
+	var:储存判定条件的变量 = {
+		set_character_name = "判定条件前缀"
+	}
+	并在scripted_trigger文件夹下创建文件夹并定义
+	判定条件前缀_available = {
+		<triggers>
+	}
+	和
+	判定条件前缀_visible = {
+		<triggers>
+	}
+	来为该判定条件设置Trigger。
+
+将判定条件赋予核心圈：
+	var:你用于储存核心圈的变量 = {
+		bound_valid_token_to_inner_circle = yes
+	}
+	需要先将临时变量inner_circle_valid_token_to_add设置为你想要设置的判定条件。
+
+	将最近的判定条件赋予核心圈：
+		var:你用于储存核心圈的变量 = {
+			bound_new_valid_token_to_inner_circle = yes
+		}
+		最近的判定条件即上一次使用add_new_inner_circle_valid_token创建的判定条件。
+	当判定条件的available不满足时，核心圈将会自动失效（需要手动使其重新生效，将会在之后的版本中加入使其自动生效的选项）。
+	当判定条件的visible不满足时，核心圈将会不可见，但是此时仍然生效。
+	特别的，核心圈默认情况下仅在被启用时可见，通过visible_while_not_available = yes 和not_visible_while_not_available = yes 来设置该核心圈是否在没有被启用的情况下仍然可见（注意：这将使得其他国家也能看到你的核心圈，因此建议为核心圈加入一个判定条件来控制可以看到核心圈的国家）。
+	需要注意的是，如果一个核心圈有多个判定条件，那么需要全部满足。
+	判定条件的scope默认为拥有核心圈的国家。
+	核心圈的变量可以使用inner_circle_entry获取，即
+		var:inner_circle_entry = {
+			<triggers>
+		}
+	可以以核心圈范围为判断条件。（在其中设置flag需要使用charater_flag)
+
+	
+将判定条件赋予顾问：
+	var:你用于储存核心圈的变量 = {
+		bound_valid_token_to_inner_circle_advisor = yes
+	}
+	需要先将临时变量inner_circle_valid_token_to_add设置为你想要设置的判定条件。
+
+	将最近的判定条件赋予核心圈：
+		var:你用于储存核心圈的变量 = {
+			bound_new_valid_token_to_inner_circle_advisor = yes
+		}
+		最近的判定条件即上一次使用add_new_inner_circle_valid_token创建的判定条件。
+	当判定条件的available不满足时，启用了的核心圈顾问将会被自动撤下，顾问的小图的portrait_valid 也将会显示第一帧（默认为一个红X）。
+	当判定条件的visible不满足时，顾问将不可见（也不会被列在核心圈的下方小图中），但是如果被启用仍然会生效。
+	判定条件的scope默认为拥有顾问的国家。
+	对于visible,核心圈的变量可以使用inner_circle_entry获取，即
+		var:inner_circle_entry = {
+			<triggers>
+		}
+	可以以核心圈范围为判断条件。（在其中设置flag需要使用charater_flag)
+	顾问本身可以使用inner_circle_advisor_entry获取，用法同上。
+
+
+
+可用的Trigger：
+	判断顾问是否可用：
+		inner_circle_advisor_is_available = yes
+
+	判断顾问是否可见：
+		inner_circle_advisor_is_visible = yes
+		通过设置临时变量inner_circle_entry为一个核心圈可以用于判断顾问在一个核心圈内是否可见
+
+	判断核心圈是否可用：
+		inner_circle_is_available = yes
+	
+	判断核心圈是否被启用：
+		inner_circle_is_active = yes
+	
+	判断顾问是否被启用：
+		inner_circle_advisor_is_activated = yes
+
+	判断是否可以成为核心领导人：
+		is_character_slot = inner_circle_advisor
+	判断是否可以成为核心圈顾问：
+		is_character_slot = inner_circle_leader
+	判断是否是核心圈（用于给every_character下限定）：
+		is_character_slot = inner_circle_circle
+
+	判断是否被启用为核心圈领导人：
+		check_variable = {
+			用于储存核心圈的变量:inner_circle_leader_character = 角色 
+		}
+		冒号不能改成点。
+
+
+
+
+
+
+
+注意：如果你需要任命为顾问或者领导人的角色是用generate_character生成的，应该先使用如下代码为角色注册token：
+角色 = {
+	set_character_flag = is_generated_by_generate_character
+	set_variable = {
+		character_token_base = token:角色的token_base
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+如下以爱尔兰为例演示了创建一个预制核心圈的代码：
+IRE_create_inner_circle = {
+	general_inner_circle_create = yes
+	set_variable = {
+		IRE_Eamon_de_Valera_inner_circle = new_inner_circle
+	}
+	general_inner_circle_leader_type_create = yes
+	set_variable = {
+		inner_circle_taoiseach = new_inner_circle_leader
+	}
+	var:inner_circle_taoiseach = {	
+		set_character_name = "总理"
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		set_new_inner_circle_leader_type = yes
+	}
+	IRE_Eamon_de_Valera = {
+		add_inner_circle_leader_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		set_character_name = "共和党保守派-瓦派"
+		set_recent_inner_circle_leader_to_inner_circle = yes
+	}
+	IRE_Eamon_de_Valera= {
+		var:portrait_large = {
+			set_character_name = "GFX_inner_circle_leader_IRE_Eamon_de_Valera"
+		}
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		activate_inner_circle_to_PREV = yes
+		set_variable = {
+			inner_circle_max_slot_showing = 2
+		}
+		set_variable = {
+			inner_circle_max_slot_showing_small = 5
+		}
+		set_variable = {
+			inner_circle_showing_slot = 4
+		}
+	}
+	IRE_P_J_Ruttledge = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Sean_T_O_Kelly = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Sean_MacEntee = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+
+	IRE_Frank_Aiken = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Oscar_Traynor = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Paddy_Smith = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Thomas_Derrig = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+
+	IRE_P_J_Ruttledge = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_P_J_Ruttledge"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_P_J_Ruttledge"
+		}
+		var:trait_name = {
+			set_character_name = "自由派法学家"
+		}
+		activate_inner_circle_advisor = yes
+	}
+	IRE_Sean_T_O_Kelly = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Sean_T_O_Kelly_Young"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Sean_T_O_Kelly"
+		}
+		var:trait_name = {
+			set_character_name = "虚衔的名望者"
+		}
+		activate_inner_circle_advisor = yes
+	}
+	IRE_Sean_MacEntee = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Sean_MacEntee"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Sean_MacEntee"
+		}
+		var:trait_name = {
+			set_character_name = "保护主义理论家"
+		}
+		activate_inner_circle_advisor = yes
+	}
+
+	IRE_Frank_Aiken = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Frank_Aiken"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Frank_Aiken"
+		}
+	}
+	add_new_inner_circle_valid_token = yes
+	var:new_inner_circle_valid_token = {
+		set_character_name = "IRE_Oscar_Traynor_VALID"
+	}
+	IRE_Oscar_Traynor = {
+		bound_new_valid_token_to_inner_circle_advisor = yes
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Oscar_Traynor"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Oscar_Traynor"
+		}
+	}
+	add_new_inner_circle_valid_token = yes
+	var:new_inner_circle_valid_token = {
+		set_character_name = "IRE_Paddy_Smith_VALID"
+	}
+	IRE_Paddy_Smith = {
+		bound_new_valid_token_to_inner_circle_advisor = yes
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Paddy_Smith"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Paddy_Smith"
+		}
+	}
+	IRE_Thomas_Derrig = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Thomas_Derrig"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Thomas_Derrig"
+		}
+	}
+
+
+	IRE_Sean_T_O_Kelly = {
+		add_trait = {
+			slot = inner_circle_advisor
+			trait = impulsive_knight
+	    }
+	    add_trait = {
+		   slot = inner_circle_advisor
+		   trait = nominal_deputy
+	    }
+	}
+}

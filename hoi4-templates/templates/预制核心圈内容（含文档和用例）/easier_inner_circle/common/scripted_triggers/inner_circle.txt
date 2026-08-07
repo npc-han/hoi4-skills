@@ -1,0 +1,64 @@
+CHECK_ADVISOR_VALID_TOKEN = {
+	meta_trigger = {
+		text = {
+			owner = {
+				[t_valid_token]_available = yes
+			}
+		}
+		t_valid_token = "[?valid_token_entry.GetName]"
+	}
+}
+CHECK_ADVISOR_VISIBLE_TOKEN = {
+	meta_trigger = {
+		text = {
+			owner = {
+				[t_valid_token]_visible = yes
+			}
+		}
+		t_valid_token = "[?valid_token_entry.GetName]"
+	}
+}
+
+inner_circle_advisor_is_available = {
+	set_temp_variable = {
+		inner_circle_advisor_entry = THIS
+	}
+	all_of = {
+		array = advisor_valid_token_lists
+		value = valid_token_entry
+		CHECK_ADVISOR_VALID_TOKEN = yes
+	}
+}
+inner_circle_advisor_is_visible = {
+	set_temp_variable = {
+		inner_circle_advisor_entry = THIS
+	}
+	all_of = {
+		array = advisor_valid_token_lists
+		value = valid_token_entry
+		CHECK_ADVISOR_VISIBLE_TOKEN = yes
+	}
+}
+inner_circle_is_available = {
+	set_temp_variable = {
+		inner_circle_entry = THIS
+	}
+	all_of = {
+		array = valid_token_lists
+		value = valid_token_entry
+		CHECK_ADVISOR_VALID_TOKEN = yes
+	}
+}
+inner_circle_is_active = {
+	meta_trigger = {
+		text = {
+			ROOT = {
+				has_idea = [t_token]_inner_circle
+			}
+		}
+		t_token = "[?THIS.inner_circle_token.GetTokenKey]"
+	}
+}
+inner_circle_advisor_is_activated = {
+	has_character_flag = inner_circle_advisor_activated
+}

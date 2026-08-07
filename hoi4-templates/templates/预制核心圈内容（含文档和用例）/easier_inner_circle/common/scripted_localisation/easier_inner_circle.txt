@@ -1,0 +1,76 @@
+defined_text = {
+    name = inner_circle_leader_portrait_token_key
+    text = {
+        trigger = {
+            set_temp_variable = {
+                inner_circle_leader_entry = inner_circle_entry:inner_circle_leader_character
+            }
+        }
+        localization_key = inner_circle_leader_portrait_token_localized_key
+    }
+}
+defined_text = {
+    name = inner_circle_ascended_advisor_frame_gfx
+    text = {
+        trigger = {
+            check_variable = {
+                inner_circle_advisor_entry = -1
+            }
+        }
+        localization_key = inner_circle_ascended_advisor_frame_gfx_unappointed_localized_key
+    }
+    text = {
+        localization_key = inner_circle_ascended_advisor_frame_gfx_appointed_localized_key
+    }
+}
+defined_text = {
+    name = inner_circle_advisor_portrait_token_key
+    text = {
+        trigger = {
+            NOT = {
+                check_variable = {
+                    inner_circle_advisor_entry = -1
+                }
+            }
+        }
+        localization_key = inner_circle_advisor_portrait_token_localized_key
+    }
+    text = {
+        localization_key = inner_circle_advisor_portrait_token_unappointed_localized_key
+    }
+}
+defined_text = {
+    name = inner_circle_advisor_small_portrait_token_key
+    text = {
+        trigger = {
+        }
+        localization_key = inner_circle_advisor_small_portrait_token_localized_key
+    }
+}
+defined_text = {
+    name = inner_circle_advisor_valid_portrait_token_key
+    text = {
+        trigger = {
+        }
+        localization_key = inner_circle_advisor_valid_portrait_token_localized_key
+    }
+}
+defined_text = {
+    name = inner_circle_advisor_modifier_key
+    text = {
+        trigger = {
+        }
+        localization_key = tech_effect|inner_circle_advisor_modifier_localization_effect
+    }
+}
+defined_text = {
+    name = inner_circle_leader_modifier_key
+    text = {
+        trigger = {
+            set_temp_variable = {
+                inner_circle_leader_entry = inner_circle_entry:inner_circle_leader_character
+            }
+        }
+        localization_key = tech_effect|inner_circle_leader_modifier_localization_effect
+    }
+}

@@ -1,0 +1,192 @@
+IRE_create_inner_circle = {
+	## 生成一个核心圈（一个国家可以同时拥有多个核心圈，核心圈可在多个国家之间转移）
+	general_inner_circle_create = yes
+	set_variable = {
+		IRE_Eamon_de_Valera_inner_circle = new_inner_circle
+	}
+	## 创建生成核心圈领袖称号类型并施加到核心圈
+	general_inner_circle_leader_type_create = yes
+	set_variable = {
+		inner_circle_taoiseach = new_inner_circle_leader
+	}
+	var:inner_circle_taoiseach = {	
+		set_character_name = "总理"
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		set_new_inner_circle_leader_type = yes
+	}
+
+	## 为角色添加核心圈领袖身份
+	IRE_Eamon_de_Valera = {
+		add_inner_circle_leader_role = yes
+	}
+
+	## 设置核心圈名称，并将上一个创建的核心圈领袖身份的角色任命为该核心圈的领袖
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		set_character_name = "共和党保守派-瓦派"
+		set_recent_inner_circle_leader_to_inner_circle = yes
+	}
+
+	## 设置核心圈领袖肖像
+	IRE_Eamon_de_Valera= {
+		var:portrait_large = {
+			set_character_name = "GFX_inner_circle_leader_IRE_Eamon_de_Valera"
+		}
+	}
+	
+	## 启用核心圈，并设置核心圈的顾问槽显示：
+	
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		activate_inner_circle_to_PREV = yes
+		set_variable = {
+			inner_circle_max_slot_showing = 3
+		}## 令核心圈顾问同时至多显示3个（可左右滑动）
+		set_variable = {
+			inner_circle_max_slot_showing_small = 7
+		}## 令核心圈小顾问同时至多显示7个（可左右滑动）
+		set_variable = {
+			inner_circle_showing_slot = 3
+		}## 令核心圈顾问同时至少显示3个空位
+	}
+
+	##为角色添加核心圈顾问身份
+	IRE_P_J_Ruttledge = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Sean_T_O_Kelly = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Sean_MacEntee = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Frank_Aiken = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Oscar_Traynor = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Paddy_Smith = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+	IRE_Thomas_Derrig = {
+		add_inner_circle_advisor_role = yes
+	}
+	var:IRE_Eamon_de_Valera_inner_circle = {
+		add_recent_advisor_to_inner_circle = yes
+	}
+
+	## 为顾问设置顾问特质和肖像，并提拔任命
+	IRE_P_J_Ruttledge = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_P_J_Ruttledge"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_P_J_Ruttledge"
+		}
+		var:trait_name = {
+			set_character_name = "自由派法学家"
+		}
+		activate_inner_circle_advisor = yes
+	}
+	IRE_Sean_T_O_Kelly = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Sean_T_O_Kelly_Young"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Sean_T_O_Kelly"
+		}
+		var:trait_name = {
+			set_character_name = "虚衔的名望者"
+		}
+		activate_inner_circle_advisor = yes
+	}
+	IRE_Sean_MacEntee = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Sean_MacEntee"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Sean_MacEntee"
+		}
+		var:trait_name = {
+			set_character_name = "保护主义理论家"
+		}
+		activate_inner_circle_advisor = yes
+	}
+
+	## 为顾问设置特质和肖像
+	IRE_Frank_Aiken = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Frank_Aiken"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Frank_Aiken"
+		}
+	}
+
+	## 创建顾问的判定：仅当scripted_trigger "IRE_Oscar_Traynor_VALID_visible/_available"满足时可见/可用
+	add_new_inner_circle_valid_token = yes
+	var:new_inner_circle_valid_token = {
+		set_character_name = "IRE_Oscar_Traynor_VALID"
+	}
+	IRE_Oscar_Traynor = {
+		bound_new_valid_token_to_inner_circle_advisor = yes #将创建的判定绑定到顾问身上
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Oscar_Traynor"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Oscar_Traynor"
+		}
+	}
+
+	add_new_inner_circle_valid_token = yes
+	var:new_inner_circle_valid_token = {
+		set_character_name = "IRE_Paddy_Smith_VALID"
+	}
+	IRE_Paddy_Smith = {
+		bound_new_valid_token_to_inner_circle_advisor = yes
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Paddy_Smith"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Paddy_Smith"
+		}
+	}
+	IRE_Thomas_Derrig = {
+		var:portrait_medium = {
+			set_character_name = "GFX_portrait_Thomas_Derrig"
+		}
+		var:portrait_small = {
+			set_character_name = "GFX_inner_circle_advisor_small_IRE_Thomas_Derrig"
+		}
+	}
+
+
+	IRE_Sean_T_O_Kelly = {
+		add_trait = {
+			slot = inner_circle_advisor
+			trait = impulsive_knight
+	    }
+	    add_trait = {
+		   slot = inner_circle_advisor
+		   trait = nominal_deputy
+	    }
+	}
+}
