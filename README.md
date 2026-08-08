@@ -1,5 +1,7 @@
 # HOI4 Modding Skills（钢4 MOD 制作技能体系）
 
+[English](README.en.md) | 简体中文
+
 16 个 AI Agent 技能（Claude Code / Codex / Copilot CLI / Gemini CLI），覆盖钢铁雄心 4（Hearts of Iron IV）MOD 制作全流程——从构思设计到代码实现、验证调试、地图与创意工坊发布。
 
 ## 快速开始（Quickstart）
@@ -62,7 +64,10 @@ hoi4-modding（路由中枢）—— 所有请求先路由
 
 - **四大检查点**贯穿所有流程：版本锚定（1.17.x）、文件依赖链、编码/BOM、最小可加载验证
 - 流程链**完全自包含**，不依赖任何外部插件
-- 知识素材来自 [秋起图书馆（霜泽图书馆）](https://steamcommunity.com/sharedfiles/filedetails/?id=3445449478) 公开教程
+- 知识素材来源：
+  - [秋起图书馆（霜泽图书馆）](https://steamcommunity.com/sharedfiles/filedetails/?id=3445449478) 公开教程
+  - [Hearts of Iron IV 官方维基](https://hoi4.paradoxwikis.com/)（语法与机制参考）
+  - 原版游戏文件（`Hearts of Iron IV/game/`）实例对照——每个模板均可在原版中找到对应范例
 
 ## 更新（Updating）
 
